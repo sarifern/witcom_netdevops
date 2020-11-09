@@ -1,0 +1,4 @@
+---
+collections:
+  - name: cisco.iosxr
+  - name: community.general

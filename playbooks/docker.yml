@@ -1,0 +1,40 @@
+---
+  - name: Include SSH playbook
+    import_playbook: monitor.yml
+  - name: Configure TIG STACK image
+    hosts: monitor
+    tasks:
+      - name: Add Docker GPG apt Key
+        apt_key:
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+      - name: Add Docker Repository
+        apt_repository:
+          repo: deb https://download.docker.com/linux/ubuntu bionic stable
+          state: present
+      - name: Update apt and install docker-ce
+        package: 
+          name: docker-ce
+          state: latest
+          update_cache: yes 
+      - name: Install Docker Module for Python
+        pip:
+          name: docker
+      - name: Get docker image
+        docker_image:
+          name: sarifern/tig-stack-tls
+          tag: no-tls
+          source: pull
+      - name: Run docker container
+        docker_container:
+          name: docker-tig-no-tls
+          image: sarifern/tig-stack-tls:no-tls
+          state: started
+          ulimits: nofile:66000:66000
+          ports:
+            - "3003:3003" #grafana
+            - "54700:54700"       # grpc
+            - "8086:8086"       #influx
+            - "3004:8888"       # influxdb-admin
+          
+          

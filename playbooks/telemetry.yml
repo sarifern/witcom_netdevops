@@ -1,0 +1,13 @@
+--- 
+  - name: Configure the edge router
+    hosts: ler1
+    connection: network_cli
+    vars_files:
+      - vars/controller_vars.yml
+      - vars/router_vars.yml
+    tasks:
+      - name: Set up the config
+        iosxr_config:
+          src: templates/full_config.j2
+          replace: config
+

@@ -1,0 +1,20 @@
+[local]
+localhost ansible_user=sarifern ansible_connection=local 
+[monitor]
+controller ansible_host=198.18.1.127 ansible_user=admin ansible_ssh_pass=admin ansible_sudo_pass=admin ansible_python_interpreter=/usr/bin/python3
+
+[controllers:children]
+local
+monitor
+
+[ler]#label edge routers 
+ler1 ansible_host=198.18.1.11 ansible_user=admin ansible_ssh_pass=admin 
+ler2 ansible_host=198.18.1.12 ansible_user=admin ansible_ssh_pass=admin
+
+[lsr]#label switching routers
+lsr1 ansible_host=198.18.1.111 ansible_user=admin ansible_ssh_pass=admin
+lsr2 ansible_host=198.18.1.112 ansible_user=admin ansible_ssh_pass=admin
+
+[rtr:children]
+ler
+lsr

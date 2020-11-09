@@ -1,0 +1,20 @@
+rtr_grpc_port: 54700
+rtr_destination_name: DEMODOCKER
+source_interface: MgmtEth0/RP0/CPU0/0
+sensor_groups:
+  - sensor_name: LOAD
+    sensor_paths: 
+      - Cisco-IOS-XR-wdsysmon-fd-oper:system-monitoring/cpu-utilization
+      - Cisco-IOS-XR-nto-misc-oper:memory-summary/nodes/node/summary
+  - sensor_name: BGP
+    sensor_paths:
+      - Cisco-IOS-XR-ipv4-bgp-oper:bgp/config-instances/config-instance/config-instance-default-vrf
+subscriptions:
+  - name: SUBDOCKER
+    sensor_groups:
+      - name: LOAD
+        sample_interval: 10
+      - name: BGP
+        sample_interval: 10
+    destination_group: DEMODOCKER
+ansible_network_os: iosxr
