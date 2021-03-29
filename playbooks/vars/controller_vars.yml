@@ -10,5 +10,5 @@
 # IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 # or implied.
 
-controller_port: 54700
-controller_ip: 198.18.1.127
+puerto_controlador: 54700
+direccion_controlador: 10.10.20.50

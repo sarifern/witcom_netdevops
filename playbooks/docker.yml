@@ -10,33 +10,19 @@
 # IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 # or implied.
 ---
-  - name: Include SSH playbook
-    import_playbook: monitor.yml
-  - name: Configure TIG STACK image
-    hosts: monitor
+  - name: Configurar imagen TIG STACK 
+    hosts: controller
+    gather_facts: False
     tasks:
-      - name: Add Docker GPG apt Key
-        apt_key:
-          url: https://download.docker.com/linux/ubuntu/gpg
-          state: present
-      - name: Add Docker Repository
-        apt_repository:
-          repo: deb https://download.docker.com/linux/ubuntu bionic stable
-          state: present
-      - name: Update apt and install docker-ce
-        package: 
-          name: docker-ce
-          state: latest
-          update_cache: yes 
-      - name: Install Docker Module for Python
+      - name: Instalar modulo Docker para Python
         pip:
           name: docker
-      - name: Get docker image
+      - name: Obtener imagen de docker
         docker_image:
           name: sarifern/tig-stack-tls
           tag: no-tls
           source: pull
-      - name: Run docker container
+      - name: Correr contenedor de docker 
         docker_container:
           name: docker-tig-no-tls
           image: sarifern/tig-stack-tls:no-tls
